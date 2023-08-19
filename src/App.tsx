@@ -1,26 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ContactsPage from './pages/ContactsPage';
+import ContactCreatePage from './pages/ContactCreatePage';
+import ContactEditPage from './pages/ContactEditPage';
+import ChartPage from './pages/ChartPage';
+import { Provider } from 'react-redux';
+import store from './store/store';
+import Sidebar from './components/Sidebar';
+import ContactViewPage from './pages/ContactViewPage';
+import Contact from './feature/Contact';
+import DefaultLayout from './layout/DefaultLayout';
+import ContactListPage from './pages/ContactListPage';
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      {/* <Dashboard /> */}
+      <Router>
+        <div className="">
+          <Routes >
+            <Route element={<DefaultLayout />}>
+            <Route path='/' element={<Contact />}/>
+            <Route path="chart" element={<ChartPage />} />
+            <Route path='list' element={<ContactListPage />} />
+
+            <Route path="contacts" element={<ContactsPage />} >
+         
+            <Route path=":id/edit" element={<ContactEditPage />} />
+            <Route path=":id" element={<ContactViewPage />} /> 
+            </Route>
+            </Route>
+          </Routes>
+        </div>
+      </Router>
+    </Provider>
   );
-}
+};
 
 export default App;
